@@ -373,7 +373,7 @@ md = {
       var dataWebsiteViewsChart = {
         labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
         series: [
-          [542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]
+          [50, 443, 320, 780, 553, 453, 326, 434, 568, 600, 400, 500]
 
         ]
       };
@@ -382,7 +382,7 @@ md = {
           showGrid: false
         },
         low: 0,
-        high: 1000,
+        high: 800,
         chartPadding: {
           top: 0,
           right: 5,
