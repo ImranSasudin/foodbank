@@ -16,8 +16,12 @@ class CheckRole
      */
     public function handle($request, Closure $next, $roles)
     {
-        // if (!Auth::check()) // I included this check because you have it, but it really should be part of your 'auth' middleware, most likely added as part of a route group.
+        // if (!Auth::guard('employee')->check()){ // I included this check because you have it, but it really should be part of your 'auth' middleware, most likely added as part of a route group.
         //     return redirect()->route('users.loginForm');
+        // }
+        // else if (!Auth::guard('user')->check()){
+        //      return redirect()->route('users.loginForm');
+        // }
 
         if($roles == 'Employee'){
 
@@ -31,7 +35,10 @@ class CheckRole
         }
 
         if($roles == 'Admin' || $roles == 'Staff'){
-            $role = Auth::guard('employee')->user()->role;
+            if(isset(Auth::guard('employee')->user()->role))
+                $role = Auth::guard('employee')->user()->role;
+            else
+                return redirect()->route('users.loginForm');
 
             if($role == $roles) {
                 return $next($request);

@@ -49,8 +49,8 @@ The above copyright notice and this permission notice shall be included in all c
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./user.html">
+                    <li class="nav-item {{ isset($employeeActive) && $employeeActive ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route ( 'employees.list' ) }}">
                             <i class="material-icons">people</i>
                             <p>Employees</p>
                         </a>
@@ -87,7 +87,7 @@ The above copyright notice and this permission notice shall be included in all c
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
                 <div class="container-fluid">
                     <div class="navbar-wrapper">
-                        <a class="navbar-brand" href="javascript:;">Dashboard</a>
+                        <a class="navbar-brand" href="javascript:;">@yield('nav')</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="sr-only">Toggle navigation</span>
@@ -141,7 +141,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     <a class="dropdown-item" href="{{ route ( 'employees.viewProfile' ) }}">Profile</a>
                                     <!-- <a class="dropdown-item" href="#">Settings</a> -->
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Log out</a>
+                                    <a class="dropdown-item" id="logout" href="#">Log out</a>
                                 </div>
                             </li>
                         </ul>
@@ -411,6 +411,27 @@ The above copyright notice and this permission notice shall be included in all c
             // Javascript method's body can be found in assets/js/demos.js
             md.initDashboardPageCharts();
             @yield('alert')
+
+            $('#logout').click(function() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Logout",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, logout!'
+                }).then((result) => {
+                    if (result.value) {
+                        window.location.href = "{{ route('users.logout') }}";
+                        // Swal.fire(
+                        //     'Deleted!',
+                        //     'Your file has been deleted.',
+                        //     'success'
+                        // )
+                    }
+                })
+            });
 
         });
     </script>

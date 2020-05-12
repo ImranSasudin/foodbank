@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Session;
 
 class UserController extends Controller
 {
@@ -29,5 +30,11 @@ class UserController extends Controller
             echo "INVALID LOGIN DONOR";
         }
         // return Redirect::to("users.login")->withSuccess('Oppes! You have entered invalid credentials');
+    }
+
+    public function logout() {
+        Session::flush();
+        Auth::logout();
+        return Redirect()->route('users.loginForm');
     }
 }

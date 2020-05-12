@@ -1,5 +1,6 @@
 @extends('layouts.sidebaremployee')
 @section('title','Dashboard')
+@section('nav','Dashboard')
 @section('content')
 
 @section('alert')
@@ -9,7 +10,7 @@
     '{{ $message }}!',
     'success'
     )
-@endif
+@endisset
 @endsection
 
 <div class="row">

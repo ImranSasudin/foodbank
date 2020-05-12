@@ -1,9 +1,10 @@
 @extends('layouts.sidebaremployee')
 @section('title','View')
+@section('nav','Profile')
 @section('content')
 
 @section('alert')
-@isset($success)
+@if(session('success'))
     Swal.fire({
         position: 'top-end',
         type: 'success',

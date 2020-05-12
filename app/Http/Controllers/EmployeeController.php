@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
-    public function registration()
-    {
-        return view('employees.registration');
-    }
-
     public function dashboard()
     {
         return view('employees.dashboard', ['dashboard' => true]);
@@ -26,7 +21,7 @@ class EmployeeController extends Controller
             'password' => 'required',
             'role' => 'required',
             'email' => 'required|unique:employees|email',
-            'phone' => 'required',
+            'phone' => 'required|numeric',
         ]);
 
         $password = Hash::make($request->password);
@@ -40,8 +35,7 @@ class EmployeeController extends Controller
         $Employee->save();
 
         if ($Employee->save()) {
-            echo "SUCCESS";
-            // \Alert::success('Employee succesfully registered!')->flash();
+           return redirect()->route('employees.list')->with('register','true');
         }
 
         // return Redirect::route("employees.index")->withSuccess('Great! You have Successfully loggedin');
@@ -97,7 +91,51 @@ class EmployeeController extends Controller
         $employee->phone = $request->input('phone');
         $employee->save(); //persist the data
 
-        return view('employees.view', ['employee' => $employee, 'success' => true] );
+        // return view('employees.view', ['employee' => $employee])->with('success', 'true');
+        return redirect()->route('employees.viewProfile')->with('success','true');
+    }
+
+    public function list(){
+
+        $employee = Employee::where('id', '!=', Auth::guard('employee')->user()->id)->paginate(6);
+        return view('employees.list', ['employees' => $employee, 'employeeActive' => true]);
+    }
+
+    public function registration()
+    {
+        return view('employees.registration' , ['employeeActive' => true]);
+    }
+
+    public function editEmployee($id)
+    {
+        //Find the employee
+        $employee = Employee::find($id);
+        return view('employees.updateEmployee', ['employee' => $employee, 'employeeActive' => true]);
+    }
+
+    public function updateEmployee(Request $request)
+    {
+        request()->validate([
+            'name' => 'required',
+            'role' => 'required',
+            'email' => 'required|email|unique:employees,email,'. $request->id,
+            'phone' => 'required|numeric',
+        ]);
+
+        $password = Hash::make($request->password);
+
+        $Employee = Employee::find($request->id);
+        $Employee->name = $request->name;
+        $Employee->email = $request->email;
+        $Employee->password = $password; //hashed password.
+        $Employee->role = $request->role;
+        $Employee->phone = $request->phone;
+        $Employee->save();
+
+        if ($Employee->save()) {
+            // session()->flash('update', 'true');
+            return redirect()->route('employees.list')->with('update','true');
+        }
 
     }
 }

@@ -17,22 +17,27 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['middleware' => 'CheckRole:Admin'], function () {
-    Route::get('/employee/register', 'EmployeeController@registration')->name('employees.registerform');
-    Route::post('/employee/register', 'EmployeeController@postRegistration')->name('employees.registration');
-});
-
 Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::get('/employee/dashboard', 'EmployeeController@dashboard')->name('employees.dashboard');
     Route::get('/employee/viewProfile', 'EmployeeController@view')->name('employees.viewProfile');
     Route::get('/employee/editProfile', 'EmployeeController@editProfile')->name('employees.editProfile');
     Route::post('/employee/updateProfile', 'EmployeeController@updateProfile')->name('employees.updateProfile');
+
+    Route::get('/donor/list', 'EmployeeController@editProfile')->name('employees.editProfile');
+});
+
+Route::group(['middleware' => 'CheckRole:Admin'], function () {
+    Route::get('/employee/register', 'EmployeeController@registration')->name('employees.registerform');
+    Route::post('/employee/register', 'EmployeeController@postRegistration')->name('employees.registration');
+    Route::get('/employee/list', 'EmployeeController@list')->name('employees.list');
+    Route::get('/employee/{id}/editEmployee', 'EmployeeController@editEmployee')->name('employees.editEmployee');
+    Route::post('/employee/updateEmployee', 'EmployeeController@updateEmployee')->name('employees.updateEmployee');
 });
 
 Route::get('/login', 'UserController@login')->name('users.loginForm');
+Route::get('/logout', 'UserController@logout')->name('users.logout');
 
 Route::post('/user/login', 'UserController@postLogin')->name('users.login');
 Route::post('/employee/login', 'EmployeeController@postLogin')->name('employees.login');
 
-Route::get('/logout', 'UserController@logout')->name('users.logout');
-Route::get('/logout', 'UserController@logout')->name('users.logout');
+
