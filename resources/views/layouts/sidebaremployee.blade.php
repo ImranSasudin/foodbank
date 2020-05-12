@@ -49,20 +49,22 @@ The above copyright notice and this permission notice shall be included in all c
                             <p>Dashboard</p>
                         </a>
                     </li>
+                    @if( Auth::guard('employee')->user()->role == 'Admin')
                     <li class="nav-item {{ isset($employeeActive) && $employeeActive ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route ( 'employees.list' ) }}">
                             <i class="material-icons">people</i>
                             <p>Employees</p>
                         </a>
                     </li>
+                    @endif
                     <li class="nav-item {{ isset($donorActive) && $donorActive ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('users.list') }}">
                             <i class="material-icons">assignment_ind</i>
                             <p>Donors</p>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./tables.html">
+                    <li class="nav-item {{ isset($foodActive) && $foodActive ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('foods.list') }}">
                             <i class="material-icons">local_pizza</i>
                             <p>Food</p>
                         </a>

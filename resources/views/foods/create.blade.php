@@ -1,17 +1,17 @@
 @extends('layouts.sidebaremployee')
-@section('title','Update Employee')
-@section('nav','Employee')
+@section('title','Create Food')
+@section('nav','Food')
 @section('content')
 
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Update Employee</h4>
-                <p class="card-category">Employee profile</p>
+                <h4 class="card-title">Create Food</h4>
+                <p class="card-category">Food Details</p>
             </div>
             <div class="card-body">
-                <form action="{{ route('employees.updateEmployee') }}" method="POST">
+                <form action="{{ route('foods.createPost') }}" method="POST">
                     @csrf
                     @if ($errors->any())
                     <div class="alert alert-danger">
@@ -23,38 +23,21 @@
                         </ul>
                     </div>
                     @endif
-                    <input type="hidden" name="id" value="{{ $employee->id }}"/>
                     <div class="row my-3">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Name</label>
-                                <input type="text" name="name" class="form-control" value="{{ $employee->name }}" required>
+                                <input type="text" name="name" class="form-control" required>
                             </div>
                         </div>
                     </div>
                     <div class="row my-3">
                         <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Email</label>
-                                <input type="text" name="email" class="form-control" value="{{ $employee->email }}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Phone</label>
-                                <input type="number" name="phone" class="form-control" value="{{ $employee->phone }}" required>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-                        <div class="col-md-6">
-                            <label class="bmd-label-floating">Role</label>
+                            <label class="bmd-label-floating">Preferable</label>
                             <div class="form-check form-check-radio">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="role" id="exampleRadios1" value="Admin" {{ $employee->role == 'Admin' ? 'checked' : '' }}>
-                                    Admin
+                                    <input class="form-check-input" type="radio" name="preferable" id="exampleRadios1" value="Yes" required>
+                                    Yes
                                     <span class="circle">
                                         <span class="check"></span>
                                     </span>
@@ -62,8 +45,8 @@
                             </div>
                             <div class="form-check form-check-radio">
                                 <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="role" id="exampleRadios2" value="Staff" {{ $employee->role == 'Staff' ? 'checked' : '' }}>
-                                    Staff
+                                    <input class="form-check-input" type="radio" name="preferable" id="exampleRadios2" value="No">
+                                    No
                                     <span class="circle">
                                         <span class="check"></span>
                                     </span>
@@ -73,7 +56,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <hr>
-                    <a href="{{ route ( 'employees.list' ) }}" class="btn btn-info">Back</a>
+                    <a href="{{ route ( 'foods.list' ) }}" class="btn btn-info">Back</a>
                     <div class="clearfix"></div>
                 </form>
             </div>

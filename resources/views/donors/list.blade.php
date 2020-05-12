@@ -1,5 +1,5 @@
 @extends('layouts.sidebaremployee')
-@section('title','List')
+@section('title','List Donors')
 @section('nav','Donor')
 @section('content')
 

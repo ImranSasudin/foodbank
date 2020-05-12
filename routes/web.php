@@ -28,6 +28,13 @@ Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::post('/donor/register', 'UserController@postRegistration')->name('users.registration');
     Route::get('/donor/{id}/edit', 'UserController@edit')->name('users.edit');
     Route::post('/donor/update', 'UserController@update')->name('users.update');
+
+    Route::get('/food/list', 'FoodController@list')->name('foods.list');
+    Route::get('/food/create', 'FoodController@create')->name('foods.create');
+    Route::post('/food/create', 'FoodController@createPost')->name('foods.createPost');
+    Route::get('/food/{id}/edit', 'FoodController@edit')->name('foods.edit');
+    Route::post('/food/update', 'FoodController@update')->name('foods.update');
+    Route::get('/food/{id}/delete', 'FoodController@delete')->name('foods.delete');
 });
 
 Route::group(['middleware' => 'CheckRole:Admin'], function () {
