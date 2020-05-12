@@ -22,6 +22,7 @@ Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::get('/employee/viewProfile', 'EmployeeController@view')->name('employees.viewProfile');
     Route::get('/employee/editProfile', 'EmployeeController@editProfile')->name('employees.editProfile');
     Route::post('/employee/updateProfile', 'EmployeeController@updateProfile')->name('employees.updateProfile');
+    Route::post('/employee/password', 'EmployeeController@password')->name('employees.password');
 
     Route::get('/donor/list', 'UserController@list')->name('users.list');
     Route::get('/donor/register', 'UserController@registration')->name('users.registerform');

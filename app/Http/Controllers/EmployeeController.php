@@ -138,4 +138,34 @@ class EmployeeController extends Controller
         }
 
     }
+
+    public function password(Request $request){
+
+        request()->validate([
+            'curPass' => 'required',
+            'newPass' => 'required',
+            'reNewPass' => 'required',
+        ]);
+
+        $employee = Employee::find(Auth::guard('employee')->user()->id);
+        $realPassword = $employee->password;
+
+        $currentPassword = $request->curPass;
+        $newPassword = $request->newPass;
+        $reenterNewPassword = $request->reNewPass;
+
+        // Hash::check($currentPassword, $realPassword);
+
+        if(!Hash::check($currentPassword, $realPassword)){
+            return redirect()->route('employees.viewProfile')->with('error','Incorrect current password');
+        }
+        else if($newPassword != $reenterNewPassword){
+            return redirect()->route('employees.viewProfile')->with('error','New password not matching. Please re-enter properly');
+        }
+        else{
+            $employee->password = Hash::make($newPassword);
+            $employee->save();
+            return redirect()->route('employees.viewProfile')->with('password','true');
+        }
+    }
 }
