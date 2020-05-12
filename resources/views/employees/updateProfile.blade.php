@@ -47,13 +47,14 @@
                             </div>
                         </div>
                     </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
                     <hr>
                     <a href="{{ route ( 'employees.viewProfile' ) }}" class="btn btn-info pull-left">Back</a>
-                    <button type="submit" class="btn btn-primary pull-right">Submit</button>
                     <div class="clearfix"></div>
                 </form>
             </div>
         </div>
+
     </div>
 </div>
 @endsection

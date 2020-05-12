@@ -23,7 +23,11 @@ Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::get('/employee/editProfile', 'EmployeeController@editProfile')->name('employees.editProfile');
     Route::post('/employee/updateProfile', 'EmployeeController@updateProfile')->name('employees.updateProfile');
 
-    Route::get('/donor/list', 'EmployeeController@editProfile')->name('employees.editProfile');
+    Route::get('/donor/list', 'UserController@list')->name('users.list');
+    Route::get('/donor/register', 'UserController@registration')->name('users.registerform');
+    Route::post('/donor/register', 'UserController@postRegistration')->name('users.registration');
+    Route::get('/donor/{id}/edit', 'UserController@edit')->name('users.edit');
+    Route::post('/donor/update', 'UserController@update')->name('users.update');
 });
 
 Route::group(['middleware' => 'CheckRole:Admin'], function () {

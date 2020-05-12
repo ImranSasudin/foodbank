@@ -55,8 +55,8 @@ The above copyright notice and this permission notice shall be included in all c
                             <p>Employees</p>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./user.html">
+                    <li class="nav-item {{ isset($donorActive) && $donorActive ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('users.list') }}">
                             <i class="material-icons">assignment_ind</i>
                             <p>Donors</p>
                         </a>

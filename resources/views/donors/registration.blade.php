@@ -1,17 +1,17 @@
 @extends('layouts.sidebaremployee')
 @section('title','Register')
-@section('nav','Employee')
+@section('nav','Donor')
 @section('content')
 
 <div class="row">
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Register Employee</h4>
-                <p class="card-category">Employee profile</p>
+                <h4 class="card-title">Register Donor</h4>
+                <p class="card-category">Donor profile</p>
             </div>
             <div class="card-body">
-                <form action="{{ route('employees.registration') }}" method="POST">
+                <form action="{{ route('users.registration') }}" method="POST">
                     @csrf
                     @if ($errors->any())
                     <div class="alert alert-danger">
@@ -57,30 +57,15 @@
                     </div>
                     <div class="row my-3">
                         <div class="col-md-6">
-                            <label class="bmd-label-floating">Role</label>
-                            <div class="form-check form-check-radio">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="role" id="exampleRadios1" value="Admin">
-                                    Admin
-                                    <span class="circle">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
-                            </div>
-                            <div class="form-check form-check-radio">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="role" id="exampleRadios2" value="Staff">
-                                    Staff
-                                    <span class="circle">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Register Number</label>
+                                <input type="text" name="registerNum" class="form-control" required>
                             </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <hr>
-                    <a href="{{ route ( 'employees.list' ) }}" class="btn btn-info">Back</a>
+                    <a href="{{ route ( 'users.list' ) }}" class="btn btn-info">Back</a>
                     <div class="clearfix"></div>
                 </form>
             </div>
