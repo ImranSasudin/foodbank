@@ -4,17 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Food extends Model
+class Campaign extends Model
 {
-    protected $table = 'foods';
+    protected $table = 'campaigns';
 
     protected $fillable = [
-        'name', 'preferable'
+        'employee_id', 'name', 'place', 'time', 'date'
     ];
 
-    public function campaigns()
+    public function foods()
     {
         return $this->hasMany('App\RquiredFood');
     }
 }
-

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
 Route::group(['middleware' => 'CheckRole:Employee'], function () {
@@ -36,6 +36,10 @@ Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::get('/food/{id}/edit', 'FoodController@edit')->name('foods.edit');
     Route::post('/food/update', 'FoodController@update')->name('foods.update');
     Route::get('/food/{id}/delete', 'FoodController@delete')->name('foods.delete');
+
+    Route::get('/campaign/list', 'CampaignController@list')->name('campaigns.list');
+    Route::get('/campaign/create', 'CampaignController@create')->name('campaigns.create');
+    Route::post('/campaign/create', 'CampaignController@createPost')->name('campaigns.createPost');
 });
 
 Route::group(['middleware' => 'CheckRole:Admin'], function () {

@@ -69,8 +69,8 @@ The above copyright notice and this permission notice shall be included in all c
                             <p>Food</p>
                         </a>
                     </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="./typography.html">
+                    <li class="nav-item {{ isset($campaignActive) && $campaignActive ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('campaigns.list') }}">
                             <i class="material-icons">event_note</i>
                             <p>Campaign</p>
                         </a>

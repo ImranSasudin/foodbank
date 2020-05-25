@@ -7,7 +7,7 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Create Food</h4>
+                <h4 class="card-title">New Food</h4>
                 <p class="card-category">Food Details</p>
             </div>
             <div class="card-body">
@@ -33,20 +33,26 @@
                     </div>
                     <div class="row my-3">
                         <div class="col-md-6">
-                            <label class="bmd-label-floating">Preferable</label>
-                            <div class="form-check form-check-radio">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="radio" name="preferable" id="exampleRadios1" value="Yes" required>
-                                    Yes
-                                    <span class="circle">
-                                        <span class="check"></span>
-                                    </span>
-                                </label>
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Quantity</label>
+                                <input type="number" name="quantity" class="form-control" min="0" value="0" required>
                             </div>
+                        </div>
+                    </div>
+                    <div class="row my-3">
+                        <div class="col-md-6">
+                            <label class="bmd-label-floating">Preferable</label>
                             <div class="form-check form-check-radio">
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="radio" name="preferable" id="exampleRadios2" value="No">
                                     No
+                                    <span class="circle">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                                <label class="form-check-label ml-4">
+                                    <input class="form-check-input" type="radio" name="preferable" id="exampleRadios1" value="Yes" required>
+                                    Yes
                                     <span class="circle">
                                         <span class="check"></span>
                                     </span>

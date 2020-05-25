@@ -16,6 +16,7 @@ class FoodController extends Controller
 
     public function create(){
 
+        
         return view('foods.create', ['foodActive' => true]);
     }
 
@@ -24,11 +25,13 @@ class FoodController extends Controller
         request()->validate([
             'name' => 'required',
             'preferable' => 'required',
+            'quantity' => 'required|numeric'
         ]);
 
         $food = new Food;
         $food->name = $request->name;
         $food->preferable = $request->preferable;
+        $food->quantity = $request->quantity;
         $food->save();
 
         if ($food->save()) {
@@ -49,11 +52,13 @@ class FoodController extends Controller
         request()->validate([
             'name' => 'required',
             'preferable' => 'required',
+            'quantity' => 'required|numeric'
         ]);
 
         $food = Food::find($request->id);
         $food->name = $request->name;
         $food->preferable = $request->preferable;
+        $food->quantity = $request->quantity;
         $food->save();
 
         if ($food->save()) {
