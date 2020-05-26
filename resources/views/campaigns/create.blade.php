@@ -59,15 +59,19 @@
                             </div>
                         </div>
                         <div class="col-md-7">
-                            <label class="bmd-label-floating"><b>Required Foods</b></label>
+                            <label class="bmd-label-floating"><b>Required Foods</b></label><a href="#" role="button" tabindex="-1" class="ml-2 btn btn-warning disabled" disabled>Food
+                                <span class="badge badge-light">qty</span>
+                            </a>
                             <div class="row my-3 overflow-auto" style="overflow-y: scroll; height: 200px;min-width: 300px;border-style: outset;">
                                 @foreach($foods as $food)
                                 <div class="col-md-4 col-4">
-                                    <button type="button" data-id="{{ $food->id }}" class="m-2 btn btn-warning food-button">{{ $food->name }}</button>
+                                    <button type="button" data-id="{{ $food->id }}" data-name="{{ $food->name }}" class="m-2 btn btn-warning food-button">{{ $food->name }}
+                                        <span class="badge badge-light">{{ $food->quantity }}</span>
+                                    </button>
                                 </div>
                                 @endforeach
                             </div>
-                            
+
                             <div class="row my-1 ">
                                 <div class="col-md-12 col-12">
                                     <div class="row my-3">
@@ -97,7 +101,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <hr>
-                    <a href="{{ route ( 'foods.list' ) }}" class="btn btn-info">Back</a>
+                    <a href="{{ route ( 'campaigns.list' ) }}" class="btn btn-info">Back</a>
                     <div class="clearfix"></div>
                 </form>
             </div>
@@ -148,7 +152,7 @@
 
     function addToCartClicked(event) {
         var button = event.target
-        var foodName = button.innerText
+        var foodName = button.getAttribute('data-name')
         var foodID = button.getAttribute('data-id');
         addItemToCart(foodName, foodID)
         // updateCartTotal()

@@ -20,6 +20,7 @@ class CreateCampaignsTable extends Migration
             $table->string('place');
             $table->time('time');
             $table->date('date');
+            $table->string('status')->default('Not Completed');
             $table->timestamps();
 
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');

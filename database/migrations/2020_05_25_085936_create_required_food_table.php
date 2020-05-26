@@ -14,6 +14,7 @@ class CreateRequiredFoodTable extends Migration
     public function up()
     {
         Schema::create('required_food', function (Blueprint $table) {
+            $table->primary(['campaign_id', 'food_id']);
             $table->unsignedBigInteger('campaign_id');
             $table->unsignedBigInteger('food_id');
             $table->integer('required_quantity');

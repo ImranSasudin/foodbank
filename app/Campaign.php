@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Campaign extends Model
 {
@@ -14,6 +15,21 @@ class Campaign extends Model
 
     public function foods()
     {
-        return $this->hasMany('App\RquiredFood');
+        return $this->hasMany('App\RequiredFood');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Employee', 'employee_id', 'id');
+    }
+
+    function format_time($time)
+    {
+        return Carbon::parse($time)->format('h:i A');
+    }
+
+    function format_date($date)
+    {
+        return Carbon::parse($date)->format('d F, Y');
     }
 }

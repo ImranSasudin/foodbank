@@ -29,4 +29,9 @@ class Employee extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function campaigns()
+    {
+        return $this->hasMany('App\Campaign');
+    }
+
 }

@@ -13,8 +13,11 @@ class CampaignController extends Controller
     public function list()
     {
 
-        $food = Campaign::paginate(6);
-        return view('foods.list', ['foods' => $food, 'foodActive' => true]);
+        $campaigns = Campaign::orderBy('date','asc')
+                    ->paginate(6);
+        
+        // $requiredFood = RequiredFood
+        return view('campaigns.list', ['campaigns' => $campaigns, 'campaignActive' => true]);
     }
 
     public function create()
@@ -29,10 +32,10 @@ class CampaignController extends Controller
         request()->validate([
             'name' => 'required',
             'place' => 'required',
-            'date' => 'required|date',
+            'date' => 'required|date|unique:campaigns',
             'time' => 'required',
             'food_id' => 'required',
-            'required_quantity' => 'numeric',
+            'required_quantity' => 'required',
         ],
         [
             'food_id.required' => 'Please choose required food',
