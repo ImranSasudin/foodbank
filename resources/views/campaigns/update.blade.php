@@ -1,5 +1,5 @@
 @extends('layouts.sidebaremployee')
-@section('title','New Campaign')
+@section('title','Update Campaign')
 @section('nav','Campaign')
 @section('content')
 
@@ -7,12 +7,13 @@
     <div class="col-md-11">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">New Campaign</h4>
+                <h4 class="card-title">Update Campaign</h4>
                 <p class="card-category">Campaign Details</p>
             </div>
             <div class="card-body">
-                <form action="{{ route('campaigns.createPost') }}" method="POST">
+                <form action="{{ route('campaigns.update') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="id" value="{{ $campaign->id }}">
                     @if ($errors->any())
                     <div class="alert alert-danger">
                         <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -29,7 +30,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Name</label>
-                                        <input type="text" name="name" class="form-control" required>
+                                        <input type="text" name="name" class="form-control" value="{{ $campaign->name }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -37,7 +38,7 @@
                                 <div class="col">
                                     <div class="form-group">
                                         <label class="bmd-label-floating">Place</label>
-                                        <input type="text" name="place" class="form-control" required>
+                                        <input type="text" name="place" class="form-control" value="{{ $campaign->place }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -45,7 +46,7 @@
                                 <div class="col">
                                     <label class="bmd-label-floating">Date</label>
                                     <div class="form-group">
-                                        <input type="date" name="date" id="date" class="form-control" required>
+                                        <input type="date" name="date" id="date" class="form-control" value="{{ $campaign->date }}" required>
                                     </div>
                                 </div>
                             </div>
@@ -53,20 +54,20 @@
                                 <div class="col">
                                     <label class="bmd-label-floating">Time</label>
                                     <div class="form-group">
-                                        <input type="time" name="time" class="form-control datetimepicker" required>
+                                        <input type="time" name="time" class="form-control datetimepicker" value="{{ $campaign->time }}" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-7">
                             <label class="bmd-label-floating"><b>Required Foods</b></label>
-                            <!-- <a href="#" role="button" tabindex="-1" class="ml-2 btn btn-warning disabled" disabled>Food
-                                <span class="badge badge-light">qty</span>
+                            <!-- <a href="#" rel="tooltip" title="Quantity" role="button" tabindex="-1" class="ml-2 btn btn-warning disabled" disabled>
+                                Food
                             </a> -->
                             <div class="row my-3 overflow-auto" style="overflow-y: scroll; height: 200px;min-width: 300px;border-style: outset;">
                                 @foreach($foods as $food)
                                 <div class="col-md-4 col-4">
-                                    <button type="button" data-id="{{ $food->id }}" rel="tooltip" title="Quantity: {{ $food->quantity }}" data-name="{{ $food->name }}" class="m-2 btn btn-warning food-button">
+                                    <button type="button" data-id="{{ $food->id }}" rel="tooltip" title="Quantity: {{ $food->quantity }}" data-name='{{ $food->name }}' class="m-2 btn btn-warning food-button">
                                         {{ $food->name }}
                                     </button>
                                 </div>
@@ -89,6 +90,20 @@
                                     <hr>
                                     <div class="cart-items">
                                         <!-- required food -->
+                                        @foreach ($campaign->foods as $food)
+                                        <div class="row my-3 cart-row">
+                                            <div class="col-md-4 col-4">
+                                                <label class="bmd-label-floating">{{ $food->food()->first()->name }}</label>
+                                                <input type="hidden" name="food_id[]" class="form-control cart-item-title" value="{{ $food->food_id }}" required>
+                                            </div>
+                                            <div class="col-md-4 col-4">
+                                                <input type="number" name="required_quantity[]" class="form-control cart-quantity-input" value="{{ $food->required_quantity }}" min="1" required>
+                                            </div>
+                                            <div class="col-md-4 col-4">
+                                                <button class="btn btn-danger" type="button">REMOVE</button>
+                                            </div>
+                                        </div>
+                                        @endforeach
                                     </div>
                                     <hr>
                                     <div class="cart-total">
@@ -142,6 +157,7 @@
             var input = quantityInputs[i]
             input.addEventListener('change', quantityChanged)
         }
+        updateCartTotal()
 
         var addToCartButtons = document.getElementsByClassName('food-button')
         for (var i = 0; i < addToCartButtons.length; i++) {
@@ -154,7 +170,7 @@
     function addToCartClicked(event) {
         var button = event.target
         var foodName = button.getAttribute('data-name')
-        var foodID = button.getAttribute('data-id');
+        var foodID = button.getAttribute('data-id')
         addItemToCart(foodName, foodID)
         // updateCartTotal()
     }

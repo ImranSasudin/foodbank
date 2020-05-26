@@ -40,6 +40,9 @@ Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::get('/campaign/list', 'CampaignController@list')->name('campaigns.list');
     Route::get('/campaign/create', 'CampaignController@create')->name('campaigns.create');
     Route::post('/campaign/create', 'CampaignController@createPost')->name('campaigns.createPost');
+    Route::get('/campaign/{id}/edit', 'CampaignController@edit')->name('campaigns.edit');
+    Route::post('/campaign/update', 'CampaignController@update')->name('campaigns.update');
+    Route::get('/campaign/{id}/delete', 'CampaignController@delete')->name('campaigns.delete');
 });
 
 Route::group(['middleware' => 'CheckRole:Admin'], function () {

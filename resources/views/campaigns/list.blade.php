@@ -17,7 +17,7 @@ timer: 1500
 Swal.fire({
 position: 'top-end',
 type: 'success',
-title: 'Food Updated',
+title: 'Campaign Updated',
 showConfirmButton: false,
 timer: 1500
 })
@@ -26,7 +26,7 @@ timer: 1500
 Swal.fire({
 position: 'top-end',
 type: 'success',
-title: 'Food Deleted',
+title: 'Campaign Deleted',
 showConfirmButton: false,
 timer: 1500
 })
@@ -102,10 +102,10 @@ else{
                             </td>
                             <td>{{ $campaign->format_date($campaign->date) }}</td>
                             <td>{{ $campaign->format_time($campaign->time) }}</td>
-                            <td><a href="{{ route ( 'foods.edit',['id'=>$campaign->id] ) }}" rel="tooltip" title="Edit Campaign" class="btn btn-primary btn-link btn-sm">
+                            <td><a href="{{ route ( 'campaigns.edit',['id'=>$campaign->id] ) }}" rel="tooltip" title="Edit Campaign" class="btn btn-primary btn-link btn-sm">
                                     <i class="material-icons">edit</i>
                                 </a></td>
-                            <td><button href="{{ route ( 'foods.delete',['id'=>$campaign->id] ) }}" rel="tooltip" data-html="true" title="Delete Campaign" class="btn btn-primary btn-link btn-sm delete-confirm">
+                            <td><button href="{{ route ( 'campaigns.delete',['id'=>$campaign->id] ) }}" rel="tooltip" data-html="true" title="Delete Campaign" class="btn btn-primary btn-link btn-sm delete-confirm">
                                     <i class="material-icons">close</i>
                                 </button></td>
                         </tr>
