@@ -1,4 +1,4 @@
-@extends('layouts.sidebaremployee')
+@extends('layouts.sidebardonor')
 @section('title','View Profile')
 @section('nav','Profile')
 @section('content')
@@ -55,7 +55,13 @@ timer: 1500
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Name</label>
-                                <p class="form-control">{{ $employee->name }}</p>
+                                <p class="form-control">{{ $user->name }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Register Number</label>
+                                <p class="form-control">{{ $user->registerNum }}</p>
                             </div>
                         </div>
                     </div>
@@ -63,7 +69,13 @@ timer: 1500
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Email</label>
-                                <p class="form-control">{{ $employee->email }}</p>
+                                <p class="form-control">{{ $user->email }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Phone Number</label>
+                                <p class="form-control">{{ $user->phone }}</p>
                             </div>
                         </div>
                     </div>
@@ -76,16 +88,7 @@ timer: 1500
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Phone</label>
-                                <p class="form-control">{{ $employee->phone }}</p>
-                            </div>
-                        </div>
-                    </div>
                     <hr>
-                    <a href="{{ route('employees.editProfile') }}" class="btn btn-primary pull-right">Update Profile</a>
                     <div class="clearfix"></div>
                 </form>
             </div>
@@ -97,7 +100,7 @@ timer: 1500
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <form action="{{ route('employees.password') }}" method="POST">
+            <form action="{{ route('users.password') }}" method="POST">
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Change Password</h5>

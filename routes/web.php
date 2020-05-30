@@ -43,6 +43,7 @@ Route::group(['middleware' => 'CheckRole:Employee'], function () {
     Route::get('/campaign/{id}/edit', 'CampaignController@edit')->name('campaigns.edit');
     Route::post('/campaign/update', 'CampaignController@update')->name('campaigns.update');
     Route::get('/campaign/{id}/delete', 'CampaignController@delete')->name('campaigns.delete');
+    Route::get('/campaign/{id}/updateStatus', 'CampaignController@updateStatus')->name('campaigns.updateStatus');
 });
 
 Route::group(['middleware' => 'CheckRole:Admin'], function () {
@@ -51,6 +52,16 @@ Route::group(['middleware' => 'CheckRole:Admin'], function () {
     Route::get('/employee/list', 'EmployeeController@list')->name('employees.list');
     Route::get('/employee/{id}/editEmployee', 'EmployeeController@editEmployee')->name('employees.editEmployee');
     Route::post('/employee/updateEmployee', 'EmployeeController@updateEmployee')->name('employees.updateEmployee');
+});
+
+Route::group(['middleware' => 'CheckRole:User'], function () {
+    Route::get('/user/dashboard', 'UserController@dashboard')->name('users.dashboard');
+    Route::get('/user/viewProfile', 'UserController@view')->name('users.viewProfile');
+    Route::post('/user/password', 'UserController@password')->name('users.password');
+
+    Route::get('/user/donate', 'DonationController@donate')->name('donations.create');
+    Route::post('/user/donate', 'DonationController@donatePost')->name('donations.createPost');
+    Route::get('/user/donate', 'DonationController@list')->name('donations.list');
 });
 
 Route::get('/login', 'UserController@login')->name('users.loginForm');

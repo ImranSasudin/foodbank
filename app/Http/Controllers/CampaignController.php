@@ -13,11 +13,21 @@ class CampaignController extends Controller
     public function list()
     {
 
-        $campaigns = Campaign::orderBy('date','asc')
+        $upcomingCampaigns = Campaign::orderBy('date','asc')
+                    ->where('status', '=', 'Not Completed')
+                    ->paginate(6);
+
+        $pastCampaigns = Campaign::orderBy('date','desc')
+                    ->where('status', '=', 'Completed')
                     ->paginate(6);
         
         // $requiredFood = RequiredFood
-        return view('campaigns.list', ['campaigns' => $campaigns, 'campaignActive' => true]);
+        return view('campaigns.list', 
+        [
+            'upcomingCampaigns' => $upcomingCampaigns, 
+            'pastCampaigns' => $pastCampaigns, 
+            'campaignActive' => true
+        ]);
     }
 
     public function edit($id){
@@ -135,6 +145,29 @@ class CampaignController extends Controller
         $campaign = Campaign::find($id)->delete();
 
         return redirect()->route('campaigns.list')->with('delete','true');
+
+    }
+
+    public function updateStatus($id){
+
+        $requiredFoods = RequiredFood::where('campaign_id', '=', $id)->get();
+        // dd($requiredFoods);
+        foreach ($requiredFoods as $requiredFood){
+            $food = Food::find($requiredFood->food_id);
+            
+            if($food->quantity < $requiredFood->required_quantity){
+                return redirect()->route('campaigns.list')->with('error','Food inventory cannot negative value');
+            }
+
+            $food->quantity = $food->quantity - $requiredFood->required_quantity;
+            $food->save();
+        }
+
+        $campaign = Campaign::find($id);
+        $campaign->status = 'Completed';
+        $campaign->save();
+
+        return redirect()->route('campaigns.list')->with('updateStatus','true');
 
     }
 }

@@ -1,6 +1,6 @@
-@extends('layouts.sidebaremployee')
-@section('title','Campaign List')
-@section('nav','Campaign')
+@extends('layouts.sidebardonor')
+@section('title','Donation List')
+@section('nav','Donation')
 @section('content')
 
 @section('alert')
@@ -124,7 +124,7 @@ else{
                         <th>Time</th>
                     </thead>
                     <tbody>
-                        @foreach($upcomingCampaigns as $campaign)
+                        @foreach($foodDonation as $campaign)
                         <tr>
                             <td>{{ $campaign->name }}</td>
                             <td>{{ $campaign->employee()->first()->name }}</td>
@@ -163,56 +163,7 @@ else{
                         @endforeach
                     </tbody>
                 </table>
-                {{ $upcomingCampaigns->links() }}
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-lg-10 col-md-12">
-        <div class="card">
-            <div class="card-header card-header-primary">
-                <h4 class="card-title">Past Campaigns</h4>
-                <!-- <p class="card-category">New employees on 15th September, 2016</p> -->
-            </div>
-            <div class="card-body  table-responsive">
-                @if ($errors->any())
-                <div class="alert alert-danger">
-                    <strong>Whoops!</strong> There were some problems.<br><br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-                <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                    <thead class="text-primary">
-                        <th>Name</th>
-                        <th>Created By</th>
-                        <th>Place</th>
-                        <th>Required Food</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                    </thead>
-                    <tbody>
-                        @foreach($pastCampaigns as $campaign)
-                        <tr>
-                            <td>{{ $campaign->name }}</td>
-                            <td>{{ $campaign->employee()->first()->name }}</td>
-                            <td>{{ $campaign->place }}</td>
-                            <td>
-                                @foreach($campaign->foods as $food)
-                                {{ $food->food()->first()->name }} : {{ $food->required_quantity }} Unit<br>
-                                @endforeach
-                            </td>
-                            <td>{{ $campaign->format_date($campaign->date) }}</td>
-                            <td>{{ $campaign->format_time($campaign->time) }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                {{ $pastCampaigns->links() }}
+                {{ $foodDonation->links() }}
             </div>
         </div>
     </div>

@@ -32,7 +32,8 @@ class RequiredFood extends Model
         $food = Food::find($this->food_id);
         $requiredFood = DB::table('required_food')
                         ->join('campaigns', 'required_food.campaign_id', '=', 'campaigns.id')
-                        ->where('food_id', $this->food_id)
+                        ->where('food_id', '=', $this->food_id)
+                        ->where('campaigns.status', '=', 'Not Completed')
                         ->where('campaigns.date', '<=', $this->campaign()->first()->date)
                         ->sum('required_quantity');
 
@@ -43,7 +44,7 @@ class RequiredFood extends Model
         } else{
             $status = 'notEnough';
         }
-        
+
         return $status;
      }
 }

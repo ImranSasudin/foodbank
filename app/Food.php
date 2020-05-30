@@ -16,5 +16,10 @@ class Food extends Model
     {
         return $this->hasMany('App\RquiredFood');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\FoodDonation');
+    }
 }
 

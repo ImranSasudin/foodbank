@@ -27,6 +27,7 @@ The above copyright notice and this permission notice shall be included in all c
     <link href="{{ asset('assets/css/material-dashboard.css?v=2.1.2') }}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('assets/demo/demo.css') }}" rel="stylesheet" />
+    
 </head>
 
 <body class="">
@@ -38,56 +39,30 @@ The above copyright notice and this permission notice shall be included in all c
         Tip 2: you can also add an image using data-image tag
     -->
             <div class="logo"><a class="simple-text logo-normal">
-                    {{ Auth::guard('employee')->user()->name }}<br>
-                    <span class="badge badge-secondary">ID: {{ Auth::guard('employee')->user()->id }}</span>
+                    {{ Auth::guard('user')->user()->name }}<br>
+                    <span class="badge badge-secondary">{{ Auth::guard('user')->user()->email }}</span>
                 </a></div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li class="nav-item {{ isset($dashboard) && $dashboard ? 'active' : '' }} ">
-                        <a class="nav-link" href="{{ route ( 'employees.dashboard' ) }}">
+                        <a class="nav-link" href="{{ route ( 'users.dashboard' ) }}">
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
                     </li>
-                    @if( Auth::guard('employee')->user()->role == 'Admin')
-                    <li class="nav-item {{ isset($employeeActive) && $employeeActive ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route ( 'employees.list' ) }}">
-                            <i class="material-icons">people</i>
-                            <p>Employees</p>
-                        </a>
-                    </li>
-                    @endif
-                    <li class="nav-item {{ isset($donorActive) && $donorActive ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('users.list') }}">
-                            <i class="material-icons">assignment_ind</i>
-                            <p>Donors</p>
-                        </a>
-                    </li>
-                    <li class="nav-item {{ isset($foodActive) && $foodActive ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('foods.list') }}">
+                    <li class="nav-item {{ isset($donation) && $donation ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('donations.list') }}">
                             <i class="material-icons">local_pizza</i>
-                            <p>Food</p>
+                            <p>Donation</p>
                         </a>
                     </li>
-                    <li class="nav-item {{ isset($campaignActive) && $campaignActive ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('campaigns.list') }}">
-                            <i class="material-icons">event_note</i>
-                            <p>Campaign</p>
-                        </a>
-                    </li>
-                    <!-- <li class="nav-item active-pro ">
-                        <a class="nav-link" href="./upgrade.html">
-                            <i class="material-icons">unarchive</i>
-                            <p>Upgrade to PRO</p>
-                        </a>
-                    </li> -->
                 </ul>
             </div>
         </div>
         <div class="main-panel">
             <!-- Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
-                <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
+                <div class="container-fluid ">
                     <div class="navbar-wrapper">
                         <a class="navbar-brand" href="javascript:;">@yield('nav')</a>
                     </div>
@@ -140,7 +115,7 @@ The above copyright notice and this permission notice shall be included in all c
                                     </p>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                                    <a class="dropdown-item" href="{{ route ( 'employees.viewProfile' ) }}">Profile</a>
+                                    <a class="dropdown-item" href="{{ route ( 'users.viewProfile' ) }}">Profile</a>
                                     <!-- <a class="dropdown-item" href="#">Settings</a> -->
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" id="logout" href="#">Log out</a>

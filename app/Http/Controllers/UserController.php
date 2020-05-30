@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Food;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -15,6 +16,11 @@ class UserController extends Controller
         return view('login');
     }
 
+    public function dashboard()
+    {
+        return view('donors.dashboard', ['dashboard' => true]);
+    }
+
     public function postLogin(Request $request)
     {
         request()->validate([
@@ -23,11 +29,12 @@ class UserController extends Controller
         ]);
 
         if (Auth::guard('user')->attempt(['email' => $request->email , 'password' => $request->password ])) {
-            // return redirect()->route('employees.index');
-            echo "SUCCESS LOGIN DONOR";
+            $message = "Login Successfull";
+            return redirect()->route('users.dashboard')->with('message', $message);
         }
         else{
-            echo "INVALID LOGIN DONOR";
+            $message = "Invalid Login";
+            return view('login', ['message' => $message]);
         }
         // return Redirect::to("users.login")->withSuccess('Oppes! You have entered invalid credentials');
     }
@@ -105,4 +112,42 @@ class UserController extends Controller
         }
 
     }
+
+    public function view()
+    {
+        //Find the donor
+        $user = User::find(Auth::guard('user')->user()->id);
+        return view('donors.view', ['user' => $user]);
+    }
+
+    public function password(Request $request){
+
+        request()->validate([
+            'curPass' => 'required',
+            'newPass' => 'required',
+            'reNewPass' => 'required',
+        ]);
+
+        $user = User::find(Auth::guard('user')->user()->id);
+        $realPassword = $user->password;
+
+        $currentPassword = $request->curPass;
+        $newPassword = $request->newPass;
+        $reenterNewPassword = $request->reNewPass;
+
+        // Hash::check($currentPassword, $realPassword);
+
+        if(!Hash::check($currentPassword, $realPassword)){
+            return redirect()->route('users.viewProfile')->with('error','Incorrect current password');
+        }
+        else if($newPassword != $reenterNewPassword){
+            return redirect()->route('users.viewProfile')->with('error','New password not matching. Please re-enter properly');
+        }
+        else{
+            $user->password = Hash::make($newPassword);
+            $user->save();
+            return redirect()->route('users.viewProfile')->with('password','true');
+        }
+    }
+
 }
