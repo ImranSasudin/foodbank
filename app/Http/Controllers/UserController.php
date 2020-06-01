@@ -29,12 +29,14 @@ class UserController extends Controller
         ]);
 
         if (Auth::guard('user')->attempt(['email' => $request->email , 'password' => $request->password ])) {
-            $message = "Login Successfull";
-            return redirect()->route('users.dashboard')->with('message', $message);
+            // $message = "Login Successfull";
+            // return redirect()->route('users.dashboard')->with('message', $message);
+            return redirect()->route('users.dashboard')->with('login','true');
         }
         else{
             $message = "Invalid Login";
             return view('login', ['message' => $message]);
+            
         }
         // return Redirect::to("users.login")->withSuccess('Oppes! You have entered invalid credentials');
     }

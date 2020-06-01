@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="col-md-7">
-                            <label class="bmd-label-floating"><b>Required Foods</b></label>
+                            <label class="bmd-label-floating"><b>Foods To Be Donated</b></label>
                             <button type="button" class="ml-2 btn btn-warning" disabled>Preferable</button>
                             <button type="button" class="ml-2 btn btn-azure" disabled>Not Preferable</button>
                             <div class="row my-3 overflow-auto" style="overflow-y: scroll; height: 250px;min-width: 300px;border-style: outset;">
@@ -87,7 +87,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                     <hr>
-                    <a href="{{ route ( 'campaigns.list' ) }}" class="btn btn-info">Back</a>
+                    <a href="{{ route ( 'donations.list' ) }}" class="btn btn-info">Back</a>
                     <div class="clearfix"></div>
                 </form>
             </div>

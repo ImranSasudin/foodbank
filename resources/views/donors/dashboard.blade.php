@@ -4,13 +4,13 @@
 @section('content')
 
 @section('alert')
-@if(session('message'))
-    Swal.fire(
+@if(session('login'))
+Swal.fire(
     'Success!',
     'Login Successfull!',
     'success'
-    )
-@endisset
+)
+@endif
 @endsection
 
 <div class="row">

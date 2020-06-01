@@ -54,8 +54,8 @@ class DonationController extends Controller
         }
 
         if ($foodDonation->save()) {
-            echo 'success save';
-            // return redirect()->route('campaigns.list')->with('create','true');
+            // echo 'success save';
+            return redirect()->route('donations.list')->with('create','true');
          }
     }
 
@@ -72,5 +72,42 @@ class DonationController extends Controller
             'foodDonation' => $foodDonation, 
             'donation' => true
         ]);
+    }
+
+    public function listDonation()
+    {
+
+        $foodDonation = Transaction::orderBy('status','desc')
+                    ->orderBy('date','asc')
+                    ->paginate(6);
+        
+        // $requiredFood = RequiredFood
+        return view('donations.list', 
+        [
+            'foodDonation' => $foodDonation, 
+            'donation' => true
+        ]);
+    }
+
+    public function updateDonation($id)
+    {
+
+        $foodDonations = FoodDonation::where('transaction_id', '=', $id)->get();
+
+        foreach ($foodDonations as $foodDonation){
+            $food = Food::find($foodDonation->food_id);
+            
+            $food->quantity = $food->quantity + $foodDonation->quantity;
+            $food->save();
+        }
+
+        $transaction = Transaction::find($id);
+        $transaction->status = 'Completed';
+        $transaction->save();
+
+        if ($foodDonation->save()) {
+            // echo 'success save';
+            return redirect()->route('donations.listDonation')->with('update','true');
+         }
     }
 }

@@ -1,4 +1,4 @@
-@extends('layouts.sidebardonor')
+@extends('layouts.sidebaremployee')
 @section('title','Donation List')
 @section('nav','Donation')
 @section('content')
@@ -72,7 +72,7 @@ event.preventDefault();
 const url = $(this).attr('href');
 swal({
 title: 'Are you sure?',
-text: 'Food inventory will be deducted based on required foods!',
+text: 'Food inventory will be added based on foods donated!',
 type: 'warning',
 buttons: ["Cancel", "Yes!"],
 showCancelButton: true,
@@ -94,8 +94,6 @@ else{
 });
 });
 @endsection
-
-<a href="{{ route('donations.create') }}" class="btn btn-info">Donate Foods</a>
 <div class="row mb-3">
     <div class="col-lg-8 col-md-8">
         <div class="card">
@@ -121,11 +119,13 @@ else{
                         <th>Date</th>
                         <th>Time</th>
                         <th>Status</th>
+                        <th>Delivered?</th>
                     </thead>
                     <tbody>
                         @foreach($foodDonation as $donation)
                         <tr>
-                            <td>{{ $donation->user()->first()->name }}</td>
+                            <td>{{ $donation->user()->first()->name }}<br>
+                            Phone: {{ $donation->user()->first()->phone }}</td>
                             <td>
                                 @foreach($donation->foods as $food)
                                 {{ $food->food()->first()->name }}
@@ -135,6 +135,13 @@ else{
                             <td>{{ $donation->format_date($donation->date) }}</td>
                             <td>{{ $donation->format_time($donation->time) }}</td>
                             <td>{{ $donation->status }}</td>
+                            @if($donation->status == 'Completed')
+                            <td></td>
+                            @else
+                            <td><a href="{{ route ( 'donations.updateDonation',['id'=>$donation->id] ) }}" rel="tooltip" title="Delivery Confirmation" class="btn btn-primary btn-link btn-sm update-status">
+                                    <i class="material-icons">edit</i>
+                                </a></td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

@@ -50,8 +50,9 @@ class EmployeeController extends Controller
 
         $credentials = $request->only('id', 'password');
         if (Auth::guard('employee')->attempt(['id' => $request->id, 'password' => $request->password])) {
-            $message = "Login Successfull";
-            return view('employees.dashboard', ['message' => $message, 'dashboard' => true]);
+            // $message = "Login Successfull";
+            return redirect()->route('employees.dashboard')->with('login','true');
+            // return view('employees.dashboard', ['message' => $message, 'dashboard' => true]);
             // alert()->warning('WarningAlert','Lorem ipsum dolor sit amet.');
         } else {
             $message = "Invalid Login";
