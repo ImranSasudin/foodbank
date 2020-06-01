@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Food;
+use App\Campaign;
+use App\Transaction;
+use App\FoodDonation;
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Session;
@@ -18,36 +22,69 @@ class UserController extends Controller
 
     public function dashboard()
     {
-        return view('donors.dashboard', ['dashboard' => true]);
+        $donationCount = Transaction::where('user_id', '=', Auth::guard('user')->user()->id)
+            ->count();
+
+        $donatedFoods = DB::table('food_donations')
+            ->join('transactions', 'transactions.id', '=', 'food_donations.transaction_id')
+            ->where('transactions.user_id', '=', Auth::guard('user')->user()->id)
+            ->sum('food_donations.quantity');
+
+        // $topFood = DB::table('food_donations')
+        //     ->join('transactions', 'transactions.id', '=', 'food_donations.transaction_id')
+        //     ->join('foods', 'foods.id', '=', 'food_donations.food_id')
+        //     ->groupBy('foods.name')
+        //     ->where('transactions.user_id', '=', Auth::guard('user')->user()->id)
+
+        //     ->selectRaw('foods.name as name, max(sum(food_donations.quantity))');
+
+        $topFood = DB::select(DB::raw('select foods.name, sum(food_donations.quantity) as quantity
+            from food_donations join foods on food_donations.food_id = foods.id join transactions on transactions.id
+            = food_donations.transaction_id where transactions.user_id=
+            ' . Auth::guard('user')->user()->id . ' group by foods.name order by quantity desc limit 1'));
+
+
+        $upcomingCampaigns = Campaign::orderBy('date', 'asc')
+            ->where('status', '=', 'Not Completed')
+            ->paginate(6);
+
+
+        return view('donors.dashboard', [
+            'dashboard' => true,
+            'upcomingCampaigns' => $upcomingCampaigns,
+            'donationCount' => $donationCount,
+            'donatedFoods' => $donatedFoods,
+            'topFood' => $topFood
+        ]);
     }
 
     public function postLogin(Request $request)
     {
         request()->validate([
-        'email' => 'required|email',
-        'password' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
         ]);
 
-        if (Auth::guard('user')->attempt(['email' => $request->email , 'password' => $request->password ])) {
+        if (Auth::guard('user')->attempt(['email' => $request->email, 'password' => $request->password])) {
             // $message = "Login Successfull";
             // return redirect()->route('users.dashboard')->with('message', $message);
-            return redirect()->route('users.dashboard')->with('login','true');
-        }
-        else{
+            return redirect()->route('users.dashboard')->with('login', 'true');
+        } else {
             $message = "Invalid Login";
             return view('login', ['message' => $message]);
-            
         }
         // return Redirect::to("users.login")->withSuccess('Oppes! You have entered invalid credentials');
     }
 
-    public function logout() {
+    public function logout()
+    {
         Session::flush();
         Auth::logout();
         return Redirect()->route('users.loginForm');
     }
 
-    public function list(){
+    public function list()
+    {
 
         $user = User::paginate(6);
         return view('donors.list', ['users' => $user, 'donorActive' => true]);
@@ -55,7 +92,7 @@ class UserController extends Controller
 
     public function registration()
     {
-        return view('donors.registration' , ['donorActive' => true]);
+        return view('donors.registration', ['donorActive' => true]);
     }
 
     public function postRegistration(Request $request)
@@ -79,12 +116,12 @@ class UserController extends Controller
         $user->save();
 
         if ($user->save()) {
-           return redirect()->route('users.list')->with('register','true');
+            return redirect()->route('users.list')->with('register', 'true');
         }
-
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
 
         $user = User::find($id);
         return view('donors.update', ['user' => $user, 'donorActive' => true]);
@@ -95,7 +132,7 @@ class UserController extends Controller
         request()->validate([
             'name' => 'required',
             'registerNum' => 'required',
-            'email' => 'required|email|unique:users,email,'.$request->id ,
+            'email' => 'required|email|unique:users,email,' . $request->id,
             'phone' => 'required|numeric',
         ]);
 
@@ -110,9 +147,8 @@ class UserController extends Controller
         $user->save();
 
         if ($user->save()) {
-           return redirect()->route('users.list')->with('update','true');
+            return redirect()->route('users.list')->with('update', 'true');
         }
-
     }
 
     public function view()
@@ -122,7 +158,8 @@ class UserController extends Controller
         return view('donors.view', ['user' => $user]);
     }
 
-    public function password(Request $request){
+    public function password(Request $request)
+    {
 
         request()->validate([
             'curPass' => 'required',
@@ -139,17 +176,14 @@ class UserController extends Controller
 
         // Hash::check($currentPassword, $realPassword);
 
-        if(!Hash::check($currentPassword, $realPassword)){
-            return redirect()->route('users.viewProfile')->with('error','Incorrect current password');
-        }
-        else if($newPassword != $reenterNewPassword){
-            return redirect()->route('users.viewProfile')->with('error','New password not matching. Please re-enter properly');
-        }
-        else{
+        if (!Hash::check($currentPassword, $realPassword)) {
+            return redirect()->route('users.viewProfile')->with('error', 'Incorrect current password');
+        } else if ($newPassword != $reenterNewPassword) {
+            return redirect()->route('users.viewProfile')->with('error', 'New password not matching. Please re-enter properly');
+        } else {
             $user->password = Hash::make($newPassword);
             $user->save();
-            return redirect()->route('users.viewProfile')->with('password','true');
+            return redirect()->route('users.viewProfile')->with('password', 'true');
         }
     }
-
 }

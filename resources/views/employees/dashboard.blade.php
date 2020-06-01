@@ -7,9 +7,9 @@
 
 @if(session('login'))
 Swal.fire(
-    'Success!',
-    'Login Successfull!',
-    'success'
+'Success!',
+'Login Successfull!',
+'success'
 )
 @endif
 @endsection
@@ -19,71 +19,81 @@ Swal.fire(
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
+                    <i class="material-icons">people</i>
                 </div>
-                <p class="card-category">Used Space</p>
-                <h3 class="card-title">49/50
-                    <small>GB</small>
+                <p class="card-category">Total Staff</p>
+                <h3 class="card-title">{{ $employee }}
+                    <small>Person</small>
                 </h3>
             </div>
             <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons text-danger">warning</i>
-                    <a href="javascript:;">Get More Space...</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-success card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">store</i>
-                </div>
-                <p class="card-category">Revenue</p>
-                <h3 class="card-title">$34,245</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-danger card-header-icon">
-                <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
-                </div>
-                <p class="card-category">Fixed Issues</p>
-                <h3 class="card-title">75</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">local_offer</i> Tracked from Github
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
-        <div class="card card-stats">
-            <div class="card-header card-header-info card-header-icon">
-                <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
-                </div>
-                <p class="card-category">Followers</p>
-                <h3 class="card-title">+245</h3>
-            </div>
-            <div class="card-footer">
-                <div class="stats">
-                    <i class="material-icons">update</i> Just Updated
-                </div>
-            </div>
+                {{-- <div class="stats">
+                    <i class="material-icons">person_add</i>
+                    Staff: {{ $staff }}</a><br>
+                <i class="material-icons">person_add</i>
+                Admin: {{ $admin }}</a>
+            </div> --}}
         </div>
     </div>
 </div>
-<div class="row">
+<div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+        <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">assignment_ind</i>
+            </div>
+            <p class="card-category">Total Donors</p>
+            <h3 class="card-title">{{ $donor }}
+                <small>Organization</small>
+            </h3>
+
+        </div>
+        <div class="card-footer">
+            <!-- <div class="stats">
+                    <i class="material-icons">person_add</i> 
+                    <a href="{{ route('users.registerform') }}">Register New Donor</a>
+                </div> -->
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+        <div class="card-header card-header-danger card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">event_note</i>
+            </div>
+            <p class="card-category">Campaign</p>
+            <h3 class="card-title">{{ $campaign }}
+                <small>Held</small></h3>
+
+        </div>
+        <div class="card-footer">
+            <!-- <div class="stats">
+                    <i class="material-icons">local_offer</i> Tracked from Github
+                </div> -->
+        </div>
+    </div>
+</div>
+<div class="col-lg-3 col-md-6 col-sm-6">
+    <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+                <i class="material-icons">redeem</i>
+            </div>
+            <p class="card-category">Donations</p>
+            <h3 class="card-title">{{ $transaction }}
+                <small>Transaction</small>
+            </h3>
+        </div>
+        <div class="card-footer">
+            <!-- <div class="stats">
+                    <i class="material-icons">update</i> Just Updated
+                </div> -->
+        </div>
+    </div>
+</div>
+</div>
+<!-- <div class="row">
     <div class="col-md-4">
         <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -133,9 +143,9 @@ Swal.fire(
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="row">
-    <div class="col-lg-6 col-md-12">
+    <!-- <div class="col-lg-6 col-md-12">
         <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
                 <div class="nav-tabs-navigation">
@@ -379,48 +389,31 @@ Swal.fire(
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6 col-md-12">
+    </div> -->
+    <div class="col-lg-8 col-md-12">
         <div class="card">
             <div class="card-header card-header-warning">
-                <h4 class="card-title">Employees Stats</h4>
-                <p class="card-category">New employees on 15th September, 2016</p>
+                <h4 class="card-title">Pending Donation</h4>
+                <p class="card-category"><a href="{{ route('donations.listDonation') }}">Go to donation</a></p>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover">
                     <thead class="text-warning">
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Salary</th>
-                        <th>Country</th>
+                        <th>Organization</th>
+                        <th>Date</th>
+                        <th>Time</th>
                     </thead>
                     <tbody>
+                        @foreach($donations as $don)
                         <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
+                            <td>{{ $don->user()->first()->name }}</td>
+                            <td>{{ $don->format_date($don->date) }}</td>
+                            <td>{{ $don->format_time($don->time) }}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Minerva Hooper</td>
-                            <td>$23,789</td>
-                            <td>Curaçao</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sage Rodriguez</td>
-                            <td>$56,142</td>
-                            <td>Netherlands</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Philip Chaney</td>
-                            <td>$38,735</td>
-                            <td>Korea, South</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
+                {{ $donations->links() }}
             </div>
         </div>
     </div>

@@ -116,7 +116,7 @@ else{
                 @endif
                 <table id="" class="table table-striped table-no-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                     <thead class="text-primary">
-                        <th>Created By</th>
+                        <th>Donor</th>
                         <th>Food To Be Donated</th>
                         <th>Date</th>
                         <th>Time</th>

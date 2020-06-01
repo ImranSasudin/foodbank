@@ -418,6 +418,7 @@ The above copyright notice and this permission notice shall be included in all c
         $(document).ready(function() {
             // Javascript method's body can be found in assets/js/demos.js
             md.initDashboardPageCharts();
+            
             @yield('alert')
 
             $('#logout').click(function() {

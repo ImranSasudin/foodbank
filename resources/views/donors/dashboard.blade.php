@@ -6,9 +6,9 @@
 @section('alert')
 @if(session('login'))
 Swal.fire(
-    'Success!',
-    'Login Successfull!',
-    'success'
+'Success!',
+'Login Successfull!',
+'success'
 )
 @endif
 @endsection
@@ -18,17 +18,17 @@ Swal.fire(
         <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
                 <div class="card-icon">
-                    <i class="material-icons">content_copy</i>
+                    <i class="material-icons">local_pizza</i>
                 </div>
-                <p class="card-category">Used Space</p>
-                <h3 class="card-title">49/50
-                    <small>GB</small>
+                <p class="card-category">Total Donation</p>
+                <h3 class="card-title">{{ $donationCount }}
+                    <small>Times</small>
                 </h3>
             </div>
             <div class="card-footer">
                 <div class="stats">
-                    <i class="material-icons text-danger">warning</i>
-                    <a href="javascript:;">Get More Space...</a>
+                    <!-- <i class="material-icons text-danger">warning</i>
+                    <a href="javascript:;">Get More Space...</a> -->
                 </div>
             </div>
         </div>
@@ -37,15 +37,17 @@ Swal.fire(
         <div class="card card-stats">
             <div class="card-header card-header-success card-header-icon">
                 <div class="card-icon">
-                    <i class="material-icons">store</i>
+                    <i class="material-icons">calculate</i>
                 </div>
-                <p class="card-category">Revenue</p>
-                <h3 class="card-title">$34,245</h3>
+                <p class="card-category">Total Donated Foods</p>
+                <h3 class="card-title">{{ $donatedFoods }}
+                    <small>Unit</small>
+                </h3>
             </div>
             <div class="card-footer">
-                <div class="stats">
+                <!-- <div class="stats">
                     <i class="material-icons">date_range</i> Last 24 Hours
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -53,19 +55,22 @@ Swal.fire(
         <div class="card card-stats">
             <div class="card-header card-header-danger card-header-icon">
                 <div class="card-icon">
-                    <i class="material-icons">info_outline</i>
+                    <i class="material-icons">looks_one</i>
                 </div>
-                <p class="card-category">Fixed Issues</p>
-                <h3 class="card-title">75</h3>
+                <p class="card-category">Top Donated Food</p>
+                <h3 class="card-title">
+                    @foreach ($topFood as $t)
+                    {{ $t->name }}
+                    @endforeach</h3>
             </div>
             <div class="card-footer">
-                <div class="stats">
+                <!-- <div class="stats">
                     <i class="material-icons">local_offer</i> Tracked from Github
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
-    <div class="col-lg-3 col-md-6 col-sm-6">
+    <!-- <div class="col-lg-3 col-md-6 col-sm-6">
         <div class="card card-stats">
             <div class="card-header card-header-info card-header-icon">
                 <div class="card-icon">
@@ -80,9 +85,9 @@ Swal.fire(
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-4">
         <div class="card card-chart">
             <div class="card-header card-header-success">
@@ -132,9 +137,9 @@ Swal.fire(
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <div class="row">
-    <div class="col-lg-6 col-md-12">
+    <!-- <div class="col-lg-6 col-md-12">
         <div class="card">
             <div class="card-header card-header-tabs card-header-primary">
                 <div class="nav-tabs-navigation">
@@ -378,47 +383,50 @@ Swal.fire(
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-lg-6 col-md-12">
+    </div> -->
+    <div class="col-lg-9 col-md-12">
         <div class="card">
             <div class="card-header card-header-warning">
-                <h4 class="card-title">Employees Stats</h4>
-                <p class="card-category">New employees on 15th September, 2016</p>
+                <h4 class="card-title">Upcoming Campaigns</h4>
+                <p class="card-category"><a href="{{ route('donations.create') }}">Click here for donation</a></p>
             </div>
             <div class="card-body table-responsive">
                 <table class="table table-hover">
                     <thead class="text-warning">
-                        <th>ID</th>
                         <th>Name</th>
-                        <th>Salary</th>
-                        <th>Country</th>
+                        <th>Place</th>
+                        <th>Required Food</th>
+                        <th>Date</th>
+                        <th>Time</th>
                     </thead>
                     <tbody>
+                        @foreach($upcomingCampaigns as $campaign)
                         <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
+                            <td>{{ $campaign->name }}</td>
+                            <td>{{ $campaign->place }}</td>
+                            <td>
+                                @foreach($campaign->foods as $food)
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6">
+                                        {{ $food->food()->first()->name }}
+                                        : {{ $food->required_quantity }} Unit
+                                    </div>
+                                    <div class="col-md-6">
+                                        @if ($food->status == 'enough')
+                                        <span class="badge badge-success">Enough</span>
+                                        @else
+                                        <span class="badge badge-danger">Not Enough</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                @endforeach
+                            </td>
+                            <td>{{ $campaign->format_date($campaign->date) }}</td>
+                            <td>{{ $campaign->format_time($campaign->time) }}</td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Minerva Hooper</td>
-                            <td>$23,789</td>
-                            <td>Curaçao</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Sage Rodriguez</td>
-                            <td>$56,142</td>
-                            <td>Netherlands</td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Philip Chaney</td>
-                            <td>$38,735</td>
-                            <td>Korea, South</td>
-                        </tr>
+                        @endforeach
                     </tbody>
+                    {{ $upcomingCampaigns->links() }}
                 </table>
             </div>
         </div>
