@@ -413,9 +413,9 @@ Swal.fire(
                                     </div>
                                     <div class="col-md-6">
                                         @if ($food->status == 'enough')
-                                        <span class="badge badge-success">Enough</span>
+                                        <span class="badge badge-success">Sufficient</span>
                                         @else
-                                        <span class="badge badge-danger">Not Enough</span>
+                                        <span class="badge badge-danger">Not Sufficient</span>
                                         @endif
                                     </div>
                                 </div>
