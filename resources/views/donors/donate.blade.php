@@ -46,8 +46,8 @@
                         </div>
                         <div class="col-md-7">
                             <label class="bmd-label-floating"><b>Foods To Be Donated</b></label>
-                            <button type="button" class="ml-2 btn btn-warning" disabled>Preferable</button>
-                            <button type="button" class="ml-2 btn btn-azure" disabled>Not Preferable</button>
+                            <button type="button" class="ml-2 btn btn-warning" disabled>Non-perishable</button>
+                            <button type="button" class="ml-2 btn btn-azure" disabled>Perishable</button>
                             <div class="row my-3 overflow-auto" style="overflow-y: scroll; height: 250px;min-width: 300px;border-style: outset;">
                                 @foreach($foods as $food)
                                 <div class="col-md-4 col-4">

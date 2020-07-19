@@ -41,7 +41,7 @@
                     </div>
                     <div class="row my-3">
                         <div class="col-md-6">
-                            <label class="bmd-label-floating">Preferable</label>
+                            <label class="bmd-label-floating">Non-perishable?</label>
                             <div class="form-check form-check-radio">
                                 <label class="form-check-label">
                                     <input class="form-check-input" type="radio" name="preferable" id="exampleRadios2" value="No">

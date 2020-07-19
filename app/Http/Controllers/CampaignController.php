@@ -156,7 +156,7 @@ class CampaignController extends Controller
             $food = Food::find($requiredFood->food_id);
             
             if($food->quantity < $requiredFood->required_quantity){
-                return redirect()->route('campaigns.list')->with('error','Food inventory cannot negative value');
+                return redirect()->route('campaigns.list')->with('error','Food inventory cannot be a negative value');
             }
 
             $food->quantity = $food->quantity - $requiredFood->required_quantity;
