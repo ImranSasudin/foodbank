@@ -63,6 +63,7 @@ class DonationController extends Controller
     {
 
         $foodDonation = Transaction::orderBy('status','desc')
+                    ->where('user_id','=',Auth::guard('user')->user()->id)
                     ->orderBy('date','asc')
                     ->paginate(6);
         

@@ -30,6 +30,8 @@ class RequiredFood extends Model
     public function getStatusAttribute($value) {
 
         $food = Food::find($this->food_id);
+        
+        // Get each food from all early campaign
         $requiredFood = DB::table('required_food')
                         ->join('campaigns', 'required_food.campaign_id', '=', 'campaigns.id')
                         ->where('food_id', '=', $this->food_id)

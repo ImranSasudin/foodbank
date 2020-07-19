@@ -32,6 +32,7 @@ class FoodController extends Controller
         $food->name = $request->name;
         $food->preferable = $request->preferable;
         $food->quantity = $request->quantity;
+        $foodDAO = new FoodDAO;
         $food->save();
 
         if ($food->save()) {
